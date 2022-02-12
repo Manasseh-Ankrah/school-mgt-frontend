@@ -1,0 +1,47 @@
+.home__paper {
+  padding: 15px !important;
+  margin-bottom: 30px;
+}
+.home {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.home__container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.home__group {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.home__left {
+  width: 460px !important;
+  height: 300px !important;
+}
+
+.home__right {
+  width: 460px !important;
+  height: 300px !important;
+}
+
+.charts {
+  width: 270px;
+}
+
+@media screen and (max-width: 500px) {
+  .paper {
+    padding: 0px !important;
+  }
+}
