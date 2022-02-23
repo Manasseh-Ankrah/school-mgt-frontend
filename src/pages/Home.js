@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../component/Card";
-import LineChart from "../Charts/LineChart";
 import { useStateValue } from "../State/StateProvider";
 import axios from ".././axios";
 // import Cards from "../component/Cards";
@@ -11,9 +10,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import ManIcon from "@mui/icons-material/Man";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import {DougChart} from "../Charts/DougChart";
+import {LineChart} from "../Charts/LineChart";
 
 import "../css/Card.css";
-import { Paper } from "@mui/material";
+import { Container, Grid, Paper } from "@mui/material";
 
 function Home() {
   const [{ adminToken, admin, student, staff, events }, dispatch] = useStateValue();
@@ -99,14 +100,31 @@ function Home() {
           />
         </div>
       </Paper>
-      {/* <div className="home__group">
-        <Paper className="home__left">
-          <p>component 1</p>
-        </Paper>
-        <Paper className="home__right">
-          <p>component 2</p>
-        </Paper>
-      </div> */}
+      <Container maxWidth={false}>
+        <Grid
+          container
+          spacing={3}
+        >
+            <Grid
+            item
+            lg={8}
+            md={12}
+            xl={9}
+            xs={12}
+          >
+            <LineChart sx={{ height: '100%' }} />
+          </Grid>
+      <Grid
+            item
+            lg={4}
+            md={12}
+            xl={3}
+            xs={12}
+          >
+            <DougChart sx={{ height: '100%' }} />
+          </Grid>
+          </Grid>
+          </Container>
     </div>
   );
 }

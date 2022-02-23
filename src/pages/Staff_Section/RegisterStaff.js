@@ -10,6 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 // import DeleteIcon from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import Login from "../Login";
+import axios from "../../axios";
 import "../../css/RegisterStaff.css";
 import TextField from "@mui/material/TextField";
 import {
@@ -25,6 +26,7 @@ import { PhotoCamera } from "@mui/icons-material";
 import Save from "@mui/icons-material/Save";
 
 import { styled } from "@mui/material/styles";
+import { useStateValue } from "../../State/StateProvider";
 
 // Gender select Object
 const genders = [
@@ -155,6 +157,8 @@ export default function FullWidthTabs() {
   const [qualification, setQualification] = React.useState("");
   const [experience, setExperience] = React.useState("");
   const [salary, setSalary] = React.useState("");
+  const [{ adminToken, admin, staffState }, dispatch] = useStateValue();
+
 
   // Onchange Event Handlers for Biodata Tabpanel
   const changeFName = (event) => {
@@ -210,21 +214,72 @@ export default function FullWidthTabs() {
     setSalary(event.target.value);
   };
 
-  const onRegisterStudent = () => {
-    console.log(fName);
-    console.log(lName);
-    console.log(gender);
-    console.log(date);
-    console.log(nationality);
-    console.log(address);
-    console.log(email);
-    console.log(telephone);
-    console.log(image);
-    // Information
-    console.log(role);
-    console.log(qualification);
-    console.log(experience);
-    console.log(salary);
+  const onRegisterStudent = async (e) => {
+  e.preventDefault();
+    if (      
+      !fName ||
+      !lName ||
+      !gender ||
+      !date ||
+      !nationality ||
+      !address ||
+      !email ||
+      !telephone ||
+      !role ||
+      !qualification ||
+      !experience ||
+      !salary 
+ ) {
+      alert("Fill all the form");
+    } else if (!email.includes("@")) {
+      alert("Enter a valid email for Staff");
+    } else {
+      try {
+        const newStaff = { 
+          "fName": fName,
+          "lName": lName,
+          "gender": gender,
+          "date": date,
+          "nationality": nationality,
+          "address": address,
+          "email": email,
+          "telephone": telephone,
+          "role": role,
+          "qualification": qualification,
+          "experience": experience,
+          "salary": salary
+          };
+        await axios.post("/staff/register", newStaff).then(()=> {
+          dispatch({
+            type: "GET_STAFF_DATA",
+            item: {
+              staffState: [...staffState,newStaff],
+            },
+          });
+          alert("Registration Successful !!");
+          // <Alert onClose={() => {}}>This is a success alert — check it out!</Alert>
+          // M.toast({html:"Registration Successful !!"});
+  
+          setFName("");
+          setLName("");
+          setGender("");
+          setDate("");
+          setNationality("");
+          setAddress("");
+          setEmail("");
+          setTelephone("");
+          setImage("");
+          setRole("");
+          setQualification("");
+          setExperience("");
+          setSalary("");
+        }).catch((err)=> {
+          alert(err);
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   // Clear handler

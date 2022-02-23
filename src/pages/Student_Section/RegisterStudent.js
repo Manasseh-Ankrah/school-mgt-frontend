@@ -12,12 +12,15 @@ import Box from "@mui/material/Box";
 import Login from "../Login";
 import "../../css/RegisterStudent.css";
 import TextField from "@mui/material/TextField";
+import M from "materialize-css";
 import {
+  Alert,
   Button,
   FormControl,
   Input,
   InputLabel,
   OutlinedInput,
+  Tooltip,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MenuItem from "@mui/material/MenuItem";
@@ -47,19 +50,19 @@ const courses = [
     value: "Database",
   },
   {
-    value: "Software-Eng.",
+    value: "Software Eng.",
   },
   {
-    value: "Computer-Science",
+    value: "Computer Science",
   },
   {
     value: "Networking",
   },
   {
-    value: "Web-Development",
+    value: "Web Development",
   },
   {
-    value: "Cyber-Security",
+    value: "Cyber Security",
   },
 ];
 
@@ -162,7 +165,7 @@ export default function FullWidthTabs() {
   const [dateValue, setDateValue] = React.useState(
     new Date("2014-08-18T21:11:54")
   );
-  const [{ adminToken, admin, studentState, staff, events }, dispatch] = useStateValue();
+  const [{ adminToken, admin, studentState }, dispatch] = useStateValue();
 
 
   // Biodata Tabpanel State
@@ -318,7 +321,10 @@ const onSubmit = async (e) => {
             studentState: [...studentState,newStudent],
           },
         });
-        // alert("Inserted a new object >>",newEvent)
+        alert("Registration Successful !!");
+        // <Alert onClose={() => {}}>This is a success alert — check it out!</Alert>
+        // M.toast({html:"Registration Successful !!"});
+
         setFName("");
         setLName("");
         setGender("");
@@ -558,6 +564,7 @@ const onSubmit = async (e) => {
                 value={regFees}
                 className="input_1"
                 onChange={changeFees}
+                // style={{marginRight: 25}}
               />
             </div>
             <div className="input_1">
@@ -747,6 +754,7 @@ const onSubmit = async (e) => {
             autoComplete="off"
           >
             <div className="btn_register">
+            <Tooltip title="Save Details">
               <Button
                 onClick={onSubmit}
                 variant="contained"
@@ -756,8 +764,10 @@ const onSubmit = async (e) => {
               >
                 Save
               </Button>
+              </Tooltip>
             </div>
             <div className="btn_cancel">
+            <Tooltip title="Discard all Details">
               <Button
                 variant="contained"
                 startIcon={<DeleteIcon />}
@@ -767,6 +777,7 @@ const onSubmit = async (e) => {
               >
                 Discard
               </Button>
+              </Tooltip>
             </div>
           </Box>
         </TabPanel>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../../css/ViewStudent.css";
-import { Paper, Button, CircularProgress, IconButton } from "@mui/material";
+import { Paper, Button, CircularProgress, IconButton, Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,6 +17,9 @@ import TableRow from "@mui/material/TableRow";
 import StudentModal from "../Student_Section/StudentModal";
 import { useStateValue } from "../../State/StateProvider";
 import axios from "../../axios";
+import { StudentTable } from "./StudentTable";
+import { customers } from "./customerData";
+// import Loader from '../../images/loading_gif1.gif';
 
 
 // import Paper from "@mui/material/Paper";
@@ -81,7 +84,7 @@ function ViewStudent() {
 
   const getStudentData = async () => {
     const req = await axios.get("/student/");
-    // console.log(req);
+    console.log(req);
     dispatch({
       type: "GET_STUDENT_DATA",
       item: {
@@ -108,26 +111,25 @@ function ViewStudent() {
     console.log("Hello world");
   };
 
-  const rows = studentState.map(
-    ({
-      fName,
-      lName,
-      date,
-      courseTitle,
-      level,
-      email,
-    }) => {
-      // const id = newId;
-      return {
-        fName,
-        lName,
-        date,
-        courseTitle,
-        level,
-        email,
-      };
-    }
-  );
+  // const rows = studentState.map(
+  //   ({
+  //     fName,
+  //     lName,
+  //     date,
+  //     courseTitle,
+  //     level,
+  //     email,
+  //   }) => {
+  //     return {
+  //       fName,
+  //       lName,
+  //       date,
+  //       courseTitle,
+  //       level,
+  //       email,
+  //     };
+  //   }
+  // );
 
   return (
     <div className="viewStudent">
@@ -148,7 +150,6 @@ function ViewStudent() {
               label="Course Title"
               value={courseTitle}
               onChange={changeCourseTitle}
-              // helperText="Please select your currency"
               className="viewStudent_input"
             >
               {courses.map((option) => (
@@ -166,7 +167,6 @@ function ViewStudent() {
               label="Level"
               value={level}
               onChange={changeLevel}
-              // helperText="Please select your currency"
               className="viewStudent_input"
             >
               {levels.map((option) => (
@@ -182,7 +182,6 @@ function ViewStudent() {
               variant="contained"
               startIcon={<Search />}
               className="save"
-              // color="success"
             >
               Search
             </Button>
@@ -200,57 +199,30 @@ function ViewStudent() {
           Student Information
         </Typography>
       </div>
-      <div className="student_tblInfo">
-        <TableContainer className="viewStudent_tblcontainer">
-          <Table className="app__table" aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="left">First</TableCell>
-                <TableCell align="left">Last</TableCell>
-                <TableCell align="left">DOB</TableCell>
-                <TableCell align="left">Course</TableCell>
-                <TableCell align="left">Level</TableCell>
-                <TableCell align="left">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row._id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="left">{row.fName}</TableCell>
-                  <TableCell align="left">{row.lName}</TableCell>
-                  <TableCell align="left">{row.date}</TableCell>
-                  <TableCell align="left">{row.courseTitle}</TableCell>
-                  <TableCell align="left">{row.level}</TableCell>
-                  <TableCell align="left">
-                    <div className="option_btn">
-                      <IconButton
-                        aria-label="delete"
-                        style={{ color: "red" }}
-                        // onClick={() => onDelete(row._id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
 
-                      <StudentModal
-                        id={row._id}
-                        fName={row.fName}
-                        lName={row.lName}
-                        course={row.course}
-                        dob={row.date}
-                        level={row.level}
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </div>
+      {studentState === null ? 
+<div style={{textAlign:"center", marginTop:50}}>
+    {/* import CircularProgress from "@mui/material/CircularProgress"; */}
+   {/* <CircularProgress /> */}
+   {/* <img src={Loader}/> */}
+   <p>Fetching Data from server....</p>
+  </div>
+  :
+
+  <div>
+  <Box
+ component="main"
+ >
+ <Container maxWidth={false}>
+   <Box >
+     <StudentTable students={studentState} />
+   </Box>
+ </Container>
+</Box>
+ </div>
+  }
+      
+  </div>
   );
 }
 

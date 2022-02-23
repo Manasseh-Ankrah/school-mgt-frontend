@@ -14,18 +14,27 @@ import EditIcon from "@mui/icons-material/Edit";
 import axios from "../../axios";
 import { useStateValue } from "../../State/StateProvider";
 
-// Course Category select Object
-const courseCats = [
-  {
-    value: "Science",
-  },
-  {
-    value: "Mathematics",
-  },
-  {
-    value: "Social Sience",
-  },
-];
+// Level Category select Object
+const levels = [
+    {
+      value: "Diploma",
+    },
+    {
+      value: "Advanced Diploma",
+    },
+    {
+      value: "NCC-Level 3",
+    },
+    {
+      value: "NCC-Level 4",
+    },
+    {
+      value: "NCC-Level 5",
+    },
+    {
+      value: "NCC-Level 6",
+    },
+  ];
 
 const StyledModal = styled(ModalUnstyled)`
   position: fixed;
@@ -62,50 +71,50 @@ const Backdrop = styled("div")`
 //   pb: 3,
 // };
 
-const CourseModal = ({ id, courseName, category, courseCode }) => {
+const AdjustFeesModal = ({ id, level, amount}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   //   NEW
-  const [updateCourse, setUpdateCourse] = React.useState(courseName);
-  const [updateCategory, setUpdateCategory] = React.useState(category);
-  const [{ adminToken, admin, courseState }, dispatch] = useStateValue();
+  const [updateLevel, setUpdateLevel] = React.useState(level);
+  const [updateAmount, setUpdateAmount] = React.useState(amount);
+  const [{ adminToken, admin, feeSetupState }, dispatch] = useStateValue();
 
-  const changeCourse = (event) => {
-    setUpdateCourse(event.target.value);
+  const changeLevel = (event) => {
+    setUpdateLevel(event.target.value);
   };
-  const changeCategory = (event) => {
-    setUpdateCategory(event.target.value);
+  const changeAmount = (event) => {
+    setUpdateAmount(event.target.value);
   };
 
   const onUpdate = (e) => {
     e.preventDefault();
 
-    console.log(courseState);
-    const editCourse =   
+    console.log(feeSetupState);
+    const editFeeSetup =   
     {
-      courseTitle: updateCourse,
-      courseCategory: updateCategory,
+      level: updateLevel,
+      amount: updateAmount,
   }
 
     axios({
       method: "patch",
-      url: `course/${id}`,
-      data: editCourse,
+      url: `fee_setup/${id}`,
+      data: editFeeSetup,
     });
 
-    let state = [...courseState];
-    let requiredState = state.filter((course) => course._id === id);
-    requiredState[0].courseTitle= updateCourse;
-    requiredState[0].courseCategory = updateCategory;
+    let state = [...feeSetupState];
+    let requiredState = state.filter((setup) => setup._id === id);
+    requiredState[0].level= updateLevel;
+    requiredState[0].amount = updateAmount;
 
     console.log(requiredState);
 
     dispatch({
-      type: "GET_COURSE_DATA",
+      type: "GET_FEESETUP_DATA",
       item: {
-        courseState: state
+        feeSetupState: state
       },
     });
 
@@ -149,22 +158,13 @@ const CourseModal = ({ id, courseName, category, courseCode }) => {
             noValidate
             autoComplete="off"
           >
-            <div>
-              <TextField
-                label="Course Name"
-                id="outlined-size-normal"
-                value={updateCourse}
-                className="modal_input"
-                onChange={changeCourse}
-              />
-            </div>
 
-            <div>
+            {/* <div>
               <TextField
                 id="outlined-select-currency"
                 select
                 label="Course Category"
-                value={updateCategory}
+                value={updateAmount}
                 onChange={changeCategory}
                 className="modal_input"
               >
@@ -174,7 +174,37 @@ const CourseModal = ({ id, courseName, category, courseCode }) => {
                   </MenuItem>
                 ))}
               </TextField>
+            </div> */}
+
+<div>
+            <TextField
+              id="outlined-select-currency"
+              select
+              label="Level"
+              value={updateLevel}
+              onChange={changeLevel}
+              className="AdjustFees_input"
+            >
+              {levels.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+
+
+            <div>
+              <TextField
+                label="Amount"
+                id="outlined-size-normal"
+                value={updateAmount}
+                className="modal_input"
+                onChange={changeAmount}
+              />
             </div>
+
+         
           </Box>
           <Button variant="contained" onClick={onUpdate}>
             Save
@@ -185,4 +215,4 @@ const CourseModal = ({ id, courseName, category, courseCode }) => {
   );
 };
 
-export default CourseModal;
+export default AdjustFeesModal;

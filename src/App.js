@@ -17,6 +17,9 @@ import ViewStaff from "./pages/Staff_Section/ViewStaff";
 import ViewCourse from "./pages/Course_Section/ViewCourse";
 import ViewFees from "./pages/Fees_Section/ViewFees";
 import ViewEvent from "././pages/Event_Section/ViewEvent";
+import AdjustFees from "././pages/Fees_Section/AdjustFees";
+
+// import {StudentTable} from "./pages/Student_Section/StudentTable";
 
 function App() {
   const [{ adminToken, admin, student }, dispatch] = useStateValue();
@@ -68,8 +71,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<NewSidebar page={<Home />} />} />
+        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/" element={<NewSidebar page={<Home />} />} />
+        {/* <Route path="/" element={<StudentTable />} /> */}
+        {/* <Route path="/dashboard" element={<NewSidebar page={<Home />} />} /> */}
         <Route
           path="/register_student"
           element={<NewSidebar page={<RegisterStudent />} />}
@@ -92,6 +97,7 @@ function App() {
           element={<NewSidebar page={<ViewCourse />} />}
         />
         <Route path="/pay_fees" element={<NewSidebar page={<ViewFees />} />} />
+        <Route path="/set_fees" element={<NewSidebar page={<AdjustFees />} />} />
         <Route path="/events" element={<NewSidebar page={<ViewEvent />} />} />
         <Route
           path="/add_account"

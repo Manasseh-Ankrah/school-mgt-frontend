@@ -2,9 +2,10 @@ export const initialState = {
   adminToken: "",
   admin: {},
   studentState: [],
-  staff: [],
+  staffState: [],
   courseState: [],
-  events: [],
+  eventState: [],
+  feeSetupState: [],
 };
 
 const reducer = (state, action) => {
@@ -23,7 +24,7 @@ const reducer = (state, action) => {
     case "GET_STAFF_DATA":
       return {
         ...state,
-        staff: action.item.staff,
+        staffState: action.item.staffState,
       };
     case "GET_COURSE_DATA":
       return {
@@ -33,7 +34,12 @@ const reducer = (state, action) => {
     case "GET_EVENT_DATA":
       return {
         ...state,
-        events: action.item.events,
+        eventState: action.item.eventState,
+      };
+    case "GET_FEESETUP_DATA":
+      return {
+        ...state,
+        feeSetupState: action.item.feeSetupState,
       };
 
     default:

@@ -10,6 +10,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useStateValue } from "../../State/StateProvider";
+import axios from "../../axios";
+
 // import axios from "./axios";
 // import Pusher from "pusher-js";
 
@@ -38,49 +41,49 @@ const Backdrop = styled("div")`
   -webkit-tap-highlight-color: transparent;
 `;
 
-const EventModal = ({ id, courseName, courseCategory, courseCode, completed }) => {
+const EventModal = ({ id, completed }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   //   NEW
-  const [pending, setPending] = React.useState(false);
+  // const [pending, setPending] = React.useState(false);
+  const [{ adminToken, admin, eventState }, dispatch] = useStateValue();
 
-  const changePending = () => {
-    setPending(true);
-    handleClose();
-  };
 
-  //   useEffect(() => {
-  //     const pusher = new Pusher("3f4a53efe35be9da4c17", {
-  //       cluster: "eu",
-  //     });
-  //     const channel = pusher.subscribe("cards");
+  // const changePending = () => {
+  //   // setPending(true);
+  //   handleClose();
+  // };
 
-  //     channel.bind("updated", changeTask);
-  //   }, []);
 
   const onUpdate = (e) => {
-    console.log("hey");
-    // console.log(updateId);
-    // console.log(updateName);
+    e.preventDefault();
 
-    // e.preventDefault();
-    // if (!updateName.length) {
-    //   return;
-    // }
+    // console.log(requiredState);
+    // console.log(completed);
+    const editEvent =   
+    {
+      completed: true,
+    }
 
-    // const newCard = {
-    //   name: updateName,
-    // };
+    axios({
+      method: "patch",
+      url: `event/${id}`,
+      data: editEvent,
+    });
 
-    // axios({
-    //   method: "patch",
-    //   url: `/tinder/cards/${updateId}`,
-    //   data: newCard,
-    // });
+    let state = [...eventState];
+    let requiredState = state.filter((event) => event._id === id);
+    requiredState[0].completed= true;
 
-    // setUpdateName("");
+    dispatch({
+      type: "GET_EVENT_DATA",
+      item: {
+        eventState: state
+      },
+    });
+
     handleClose();
   };
 
@@ -133,7 +136,7 @@ const EventModal = ({ id, courseName, courseCategory, courseCode, completed }) =
             Mark Event as Completed
           </Typography>
 
-          <Button variant="contained" onClick={changePending}>
+          <Button variant="contained" onClick={onUpdate}>
             Done
           </Button>
         </Paper>

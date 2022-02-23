@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import "../../css/ViewCourse.css";
-import { Paper, Button, CircularProgress, IconButton, Container } from "@mui/material";
+import "../../css/AdjustFees.css";
+import { Paper, Button, CircularProgress, IconButton, Container, FormControl, InputLabel, OutlinedInput, InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,92 +14,95 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import CourseModal from "./CourseModal";
+// import CourseModal from "./CourseModal";
 import { useStateValue } from "../../State/StateProvider";
 import Save from "@mui/icons-material/Save";
 import axios from "../../axios";
-import {CourseTable} from "../Course_Section/CourseTable";
+// import {CourseTable} from "../Course_Section/CourseTable";
 import Random from "random-number";
+import { AdjustFeesTable } from "./AdjustFeesTable";
 
 // import Paper from "@mui/material/Paper";
 // import TableInfo from "./TableInfo";
 
-const courseCats = [
-  {
-    value: "Science",
-  },
-  {
-    value: "Mathematics",
-  },
-  {
-    value: "Social Sience",
-  },
-];
+// Level select Object
+const levels = [
+    {
+      value: "Diploma",
+    },
+    {
+      value: "Advanced Diploma",
+    },
+    {
+      value: "NCC-Level 3",
+    },
+    {
+      value: "NCC-Level 4",
+    },
+    {
+      value: "NCC-Level 5",
+    },
+    {
+      value: "NCC-Level 6",
+    },
+  ];
 
-function ViewCourse() {
-  const [courseTitle, setCourseTitle] = React.useState("");
-  const [courseCategory, setCourseCategory] = React.useState("");
-  const [courseCode, setCourseCode] = React.useState("001");
-  const [{ adminToken, admin,courseState }, dispatch] = useStateValue();
+function AdjustFees() {
+  const [level, setLevel] = React.useState("");
+  const [amount, setAmount] = React.useState("");
+  const [{ adminToken, admin,feeSetupState }, dispatch] = useStateValue();
 
 
-  const getCourseData = async () => {
-    const req = await axios.get("/course/");
+  const getFeeSetupData = async () => {
+    const req = await axios.get("/fee_setup/");
     // console.log(req);
     dispatch({
-      type: "GET_COURSE_DATA",
+      type: "GET_FEESETUP_DATA",
       item: {
-        courseState: req.data,
+        feeSetupState: req.data,
       },
     });
   };
   useEffect(() => {
-    getCourseData();
+    getFeeSetupData();
   }, []);
-  console.log(courseState);
+//   console.log(feeSetupState);
 
 
 
-  const changeCourse = (event) => {
-    setCourseTitle(event.target.value);
+  const changeLevel = (event) => {
+    setLevel(event.target.value);
   };
-  const changeCourseCat = (event) => {
-    setCourseCategory(event.target.value);
+  const changeAmount = (event) => {
+    setAmount(event.target.value);
   };
 
 // onSubmit
   const onSubmit = async (e) => {
+    //   console.log(level);
+    //   console.log(amount);
     e.preventDefault();
-    if (!courseTitle || !courseCategory ) {
+    if (!level || !amount ) {
       alert("Fill all the form");
-    } else if (!courseTitle) {
+    } else if (!level) {
       alert("Enter a course");
-    } else if (!courseCategory) {
+    } else if (!amount) {
       alert("Select a Category");
     }  else {
       try {
-        const options = {
-          min: 1,
-          max: 5,
-          integer: true,
-        };
-        // setCourseCode(Random(options));
-        const newCourse = { 
-           "courseTitle": courseTitle,
-           "courseCategory": courseCategory, 
-           "courseCode": courseCode + courseState.length
+        const newSetup = { 
+           "level": level,
+           "amount": amount, 
           };
-        await axios.post("/course/register", newCourse).then((res)=> {
-          // console.log(res.data);
+        await axios.post("/fee_setup/register", newSetup).then((res)=> {
           dispatch({
-            type: "GET_COURSE_DATA",
+            type: "GET_FEESETUP_DATA",
             item: {
-              courseState: [...courseState,res.data],
+              feeSetupState: [...feeSetupState,res.data],
             },
           });
-          // alert("Registration Succesful!!")
-          setCourseTitle("");
-          setCourseCategory("");
+          setLevel("");
+          setAmount("");
         }).catch((err)=> {
           alert(err);
         })
@@ -111,43 +114,45 @@ function ViewCourse() {
 
 
   return (
-    <div className="viewCourse">
-      <Paper className="viewCourse_paper" elevetion={3}>
+    <div className="AdjustFees">
+      <Paper className="AdjustFees_paper" elevetion={3}>
         <Box
           component="form"
           sx={{
             "& .MuiTextField-root": { m: 1 },
           }}
-          className="viewCourse_box "
+          className="AdjustFees_box "
           noValidate
           autoComplete="off"
         >
-          <div>
-            <TextField
-              label="Course Name"
-              id="outlined-size-normal"
-              value={courseTitle}
-              className="viewCourse_input"
-              onChange={changeCourse}
-            />
-          </div>
 
           <div>
             <TextField
               id="outlined-select-currency"
               select
-              label="Course Category"
-              value={courseCategory}
-              onChange={changeCourseCat}
-              className="viewCourse_input"
+              label="Level"
+              value={level}
+              onChange={changeLevel}
+              className="AdjustFees_input"
             >
-              {courseCats.map((option) => (
+              {levels.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.value}
                 </MenuItem>
               ))}
             </TextField>
           </div>
+
+        <FormControl className="AdjustFees_input">
+          <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            value={amount}
+            onChange={changeAmount}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            label="Amount"
+          />
+        </FormControl>
 
           <div className="btn_search">
             <Button
@@ -163,19 +168,19 @@ function ViewCourse() {
         </Box>
       </Paper>
 
-      <div className="viewCourse_results">
+      <div className="AdjustFees_results">
         <Typography
           variant="h6"
           noWrap
           component="div"
           className="results_text"
         >
-          Saved Courses
+          Fees Setup
         </Typography>
       </div>
 
 
-      {courseState === null ? 
+      {feeSetupState === null ? 
 <div style={{textAlign:"center", marginTop:50}}>
     {/* import CircularProgress from "@mui/material/CircularProgress"; */}
    {/* <CircularProgress /> */}
@@ -189,7 +194,7 @@ function ViewCourse() {
  >
  <Container maxWidth={false}>
    <Box >
-     <CourseTable courses={courseState} />
+     <AdjustFeesTable setups={feeSetupState} />
    </Box>
  </Container>
 </Box>
@@ -199,4 +204,4 @@ function ViewCourse() {
   );
 }
 
-export default ViewCourse;
+export default AdjustFees;

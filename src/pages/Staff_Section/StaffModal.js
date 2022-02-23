@@ -11,8 +11,9 @@ import {
   Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-// import axios from "./axios";
-// import Pusher from "pusher-js";
+import { useStateValue } from "../../State/StateProvider";
+import axios from "../../axios";
+
 
 const StyledModal = styled(ModalUnstyled)`
   position: fixed;
@@ -91,6 +92,8 @@ const StaffModal = ({
   const [updateQualification, setUpdateQualification] =
     React.useState(qualification);
   const [updateSalary, setUpdateSalary] = React.useState(salary);
+  const [{ adminToken, admin, staffState }, dispatch] = useStateValue();
+
 
   const changeFirst = (event) => {
     setUpdateFirst(event.target.value);
@@ -108,36 +111,42 @@ const StaffModal = ({
     setUpdateSalary(event.target.value);
   };
 
-  //   useEffect(() => {
-  //     const pusher = new Pusher("3f4a53efe35be9da4c17", {
-  //       cluster: "eu",
-  //     });
-  //     const channel = pusher.subscribe("cards");
-
-  //     channel.bind("updated", changeTask);
-  //   }, []);
-
   const onUpdate = (e) => {
-    console.log("hey");
-    // console.log(updateId);
-    // console.log(updateName);
+    e.preventDefault();
 
-    // e.preventDefault();
-    // if (!updateName.length) {
-    //   return;
-    // }
+    const editStaff =   
+    {
+      fName: updateFirst,
+      lName: updateLast,
+      qualification: updateQualification,
+      salary: updateSalary
+  }
 
-    // const newCard = {
-    //   name: updateName,
-    // };
+    axios({
+      method: "patch",
+      url: `staff/${id}`,
+      data: editStaff,
+    });
 
-    // axios({
-    //   method: "patch",
-    //   url: `/tinder/cards/${updateId}`,
-    //   data: newCard,
-    // });
+    let state = [...staffState];
+    let requiredState = state.filter((Staff) => Staff._id === id);
+    requiredState[0].fName = updateFirst;
+    requiredState[0].lName = updateLast;
+    requiredState[0].qualification = updateQualification;
+    requiredState[0].salary = updateSalary;
 
-    // setUpdateName("");
+    //  requiredState = {...requiredState, fName: "Romeo"};
+
+    console.log(requiredState);
+    // console.log(state);
+
+    dispatch({
+      type: "GET_STAFF_DATA",
+      item: {
+        staffState: state
+      },
+    });
+
     handleClose();
   };
 

@@ -21,9 +21,12 @@ import "../css/SidebarRow.css";
 
 // icons
 import HomeIcon from "@mui/icons-material/Home";
+import UpIcon from '@mui/icons-material/ExpandLess';
+import DownIcon from '@mui/icons-material/ExpandMore';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import Settings from '@mui/icons-material/Settings';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import PersonIcon from '@mui/icons-material/Person';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
@@ -70,6 +73,35 @@ function NewSidebar(props) {
 
       history("/");
   };
+
+
+  // DropDown
+  const [studentDrop, setStudentDrop] = React.useState(false);
+  const [staffDrop, setStaffDrop] = React.useState(false);
+  const [courseDrop, setCourseDrop] = React.useState(false);
+  const [feesDrop, setFeesDrop] = React.useState(false);
+  const [eventsDrop, setEventsDrop] = React.useState(false);
+
+  // Student Section Dropdown
+  const onStudentDrop = () => {
+    setStudentDrop(!studentDrop);
+  }
+    // Staff Section Dropdown
+  const onStaffDrop = () => {
+    setStaffDrop(!staffDrop);
+  }
+    // Course Section Dropdown
+  const onCourseDrop = () => {
+    setCourseDrop(!courseDrop);
+  }
+    // Fees Section Dropdown
+  const onFeesDrop = () => {
+    setFeesDrop(!feesDrop);
+  }
+    // Events Section Dropdown
+  const onEventsDrop = () => {
+    setEventsDrop(!eventsDrop);
+  }
 
 
 
@@ -130,15 +162,15 @@ function NewSidebar(props) {
 
     const feesObject = [
     {
+      path: "/set_fees",
+      title: "Fee Setup",
+      icon: <Settings />,
+    },
+    {
       path: "/pay_fees",
-      title: "School Fees",
+      title: "Fee Payment",
       icon: <AttachMoneyIcon />,
     },
-    //      {
-    //   path: "/fees",
-    //   title: "School Fees",
-    //   icon: <AttachMoneyIcon />,
-    // },
     // {
     //   path: "/view_course",
     //   title: "View Courses",
@@ -164,7 +196,7 @@ function NewSidebar(props) {
 
   // Drawer function
   const drawer = (
-    <div  style={{backgroundColor:"#1c2a40"}}>
+    <div className="sidebar_element">
       <Toolbar />
 
        <List>
@@ -186,12 +218,14 @@ function NewSidebar(props) {
       {/* Students Section */}
          <List>
         {['Students Section'].map((text, index) => (
-          <ListItem button key={text} className="sidebarRow__section">
+          <ListItem button onClick={onStudentDrop} key={text} className="sidebarRow__section">
             <ListItemText primary={text} />
+            {studentDrop ? <UpIcon /> :<DownIcon/>}
           </ListItem>
         ))}
       </List>
       <Divider />
+     {studentDrop && 
       <List>
      {/*studentObject map */}
           {studentObject.map((items) => (
@@ -205,19 +239,23 @@ function NewSidebar(props) {
           </Link>
       ))}
       </List>
+     
+     }
       <Divider />
 
       {/* Staff Section */}
          <List>
         {['Staff Section'].map((text, index) => (
-          <ListItem button key={text} className="sidebarRow__section" style={{marginTop: -10}}>
+          <ListItem button onClick={onStaffDrop} key={text} className="sidebarRow__section" style={{marginTop: -10}}>
             <ListItemText primary={text} />
+            {staffDrop ? <UpIcon /> :<DownIcon/>}
+
           </ListItem>
         ))}
       </List>
       <Divider />
+      {staffDrop &&
       <List>
-
     {/* staffObject map */}
           {staffObject.map((items) => (
       <Link to={items.path} style={{textDecoration:"none"}}>
@@ -230,20 +268,23 @@ function NewSidebar(props) {
           </Link>
       ))}
       </List>
+}
       <Divider />
 
 
         {/* Course Section */}
          <List>
         {['Course Section'].map((text, index) => (
-          <ListItem button key={text} className="sidebarRow__section" style={{marginTop: -10}}>
+          <ListItem button onClick={onCourseDrop} key={text} className="sidebarRow__section" style={{marginTop: -10}}>
             <ListItemText primary={text} />
+            {courseDrop ? <UpIcon /> :<DownIcon/>}
+
           </ListItem>
         ))}
       </List>
       <Divider />
+      {courseDrop &&
       <List>
-
        {/*courseObject map  */}
           {courseObject.map((items) => (
 <Link to={items.path} style={{textDecoration:"none"}}>
@@ -256,17 +297,21 @@ function NewSidebar(props) {
           </Link>
       ))}
       </List>
+}
       <Divider />
 
             {/* Fees Section */}
          <List>
         {['Fees Section'].map((text, index) => (
-          <ListItem button key={text} className="sidebarRow__section">
+          <ListItem button onClick={onFeesDrop} key={text} className="sidebarRow__section" style={{marginTop: -10}}>
             <ListItemText primary={text} />
+            {feesDrop ? <UpIcon /> :<DownIcon/>}
+
           </ListItem>
         ))}
       </List>
       <Divider />
+      {feesDrop &&
       <List>
      {/*feesObject map */}
           {feesObject.map((items) => (
@@ -280,20 +325,22 @@ function NewSidebar(props) {
           </Link>
       ))}
       </List>
+}
       <Divider />
 
 
        {/* Event Section */}
          <List>
         {['Events Section'].map((text, index) => (
-          <ListItem button key={text} className="sidebarRow__section" style={{marginTop: -10}}>
+          <ListItem button onClick={onEventsDrop} key={text} className="sidebarRow__section" style={{marginTop: -10}}>
             <ListItemText primary={text} />
+            {eventsDrop ? <UpIcon /> :<DownIcon/>}
           </ListItem>
         ))}
       </List>
       <Divider />
+      {eventsDrop &&
       <List>
-
         {/*eventObject map  */}
           {eventObject.map((items) => (
 <Link to={items.path} style={{textDecoration:"none"}}>
@@ -306,6 +353,7 @@ function NewSidebar(props) {
           </Link>
       ))}
       </List>
+}
       <Divider />
     </div>
   );

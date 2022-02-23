@@ -45,8 +45,8 @@
 .sidebarRow__section {
   background-color: gray !important;
   color: white !important;
-  margin-bottom: -8px !important;
-  text-align: center !important;
+  margin-bottom: 8px !important;
+  /* text-align: center !important; */
 }
 
 .sidebar__right__icons {
@@ -71,6 +71,11 @@
 
 .sidebar_container {
   overflow-x: hidden;
+}
+
+.sidebar_element {
+  background-color: #1c2b40;
+  height: 1000px;
 }
 
 @media screen and (max-width: 900px) {

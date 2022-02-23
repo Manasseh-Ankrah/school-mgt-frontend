@@ -8,11 +8,12 @@ import {
   MenuItem,
   Paper,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-// import axios from "./axios";
-// import Pusher from "pusher-js";
+import axios from "../../axios";
+import { useStateValue } from "../../State/StateProvider";
 
 // Level select Object
 const levels = [
@@ -20,7 +21,7 @@ const levels = [
     value: "Diploma",
   },
   {
-    value: "Advanced-Diploma",
+    value: "Advanced Diploma",
   },
   {
     value: "NCC-Level 3",
@@ -42,19 +43,19 @@ const courses = [
     value: "Database",
   },
   {
-    value: "Software-Eng.",
+    value: "Software Eng.",
   },
   {
-    value: "Computer-Science",
+    value: "Computer Science",
   },
   {
     value: "Networking",
   },
   {
-    value: "Web-Development",
+    value: "Web Development",
   },
   {
-    value: "Cyber-Security",
+    value: "Cyber Security",
   },
 ];
 
@@ -105,6 +106,9 @@ const Modal = ({ fName, lName, id, dob, course, level }) => {
   const [updateCourse, setUpdateCourse] = React.useState(course);
   const [updateLevel, setUpdateLevel] = React.useState(level);
 
+  const [{ adminToken, admin, studentState }, dispatch] = useStateValue();
+
+
   const changeFirst = (event) => {
     setUpdateFirst(event.target.value);
   };
@@ -121,34 +125,42 @@ const Modal = ({ fName, lName, id, dob, course, level }) => {
     setUpdateLevel(event.target.value);
   };
 
-  //   useEffect(() => {
-  //     const pusher = new Pusher("3f4a53efe35be9da4c17", {
-  //       cluster: "eu",
-  //     });
-  //     const channel = pusher.subscribe("cards");
-
-  //     channel.bind("updated", changeTask);
-  //   }, []);
 
   const onUpdate = (e) => {
-    console.log("hey");
-    // console.log(updateId);
-    // console.log(updateName);
+    e.preventDefault();
 
-    // e.preventDefault();
-    // if (!updateName.length) {
-    //   return;
-    // }
+    const editStudent =   
+    {
+      fName: updateFirst,
+      lName: updateLast,
+      level: updateLevel,
+      courseTitle: updateCourse
+  }
 
-    // const newCard = {
-    //   name: updateName,
-    // };
+    axios({
+      method: "patch",
+      url: `student/${id}`,
+      data: editStudent,
+    });
 
-    // axios({
-    //   method: "patch",
-    //   url: `/tinder/cards/${updateId}`,
-    //   data: newCard,
-    // });
+    let state = [...studentState];
+    let requiredState = state.filter((stud) => stud._id === id);
+    requiredState[0].fName = updateFirst;
+    requiredState[0].lName = updateLast;
+    requiredState[0].level = updateLevel;
+    requiredState[0].courseTitle = updateCourse;
+
+    //  requiredState = {...requiredState, fName: "Romeo"};
+
+    console.log(requiredState);
+    // console.log(state);
+
+    dispatch({
+      type: "GET_STUDENT_DATA",
+      item: {
+        studentState: state
+      },
+    });
 
     // setUpdateName("");
     handleClose();
@@ -156,6 +168,7 @@ const Modal = ({ fName, lName, id, dob, course, level }) => {
 
   return (
     <div>
+      <Tooltip title="Edit Student">
       <IconButton
         aria-label="edit"
         style={{ color: "turquoise" }}
@@ -163,6 +176,7 @@ const Modal = ({ fName, lName, id, dob, course, level }) => {
       >
         <EditIcon />
       </IconButton>
+      </Tooltip>
 
       <StyledModal
         aria-labelledby="unstyled-modal-title"

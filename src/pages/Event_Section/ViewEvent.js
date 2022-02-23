@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../../css/ViewEvent.css";
-import { Paper, Button, IconButton } from "@mui/material";
+import { Paper, Button, IconButton, Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,12 +16,13 @@ import TableRow from "@mui/material/TableRow";
 import EventModal from "./EventModal";
 import axios from "../../axios";
 import { useStateValue } from "../../State/StateProvider";
+import { EventTable } from "./EventTable";
 
 function ViewEvent() {
   const [event, setEvent] = React.useState("");
   const [eventDate, setEventDate] = React.useState("");
   const [completed, setCompleted] = React.useState(false);
-  const [{ adminToken, admin, student, staff, events }, dispatch] = useStateValue();
+  const [{ adminToken, admin, eventState }, dispatch] = useStateValue();
   
 
   const getEventData = async () => {
@@ -29,13 +30,14 @@ function ViewEvent() {
     dispatch({
       type: "GET_EVENT_DATA",
       item: {
-        events: req.data,
+        eventState: req.data,
       },
     });
   };
   useEffect(() => {
     getEventData()  
   }, [])
+  console.log(eventState);
   
 
 
@@ -63,11 +65,11 @@ function ViewEvent() {
            "eventDate": eventDate, 
            "completed":completed 
           };
-        await axios.post("/event/register", newEvent).then(()=> {
+        await axios.post("/event/register", newEvent).then((res)=> {
           dispatch({
             type: "GET_EVENT_DATA",
             item: {
-              events: [...events,newEvent],
+              eventState: [...eventState,res.data],
             },
           });
           // alert("Inserted a new object >>",newEvent)
@@ -83,12 +85,6 @@ function ViewEvent() {
     }
   };
 
-
-
-  const rows = events.map(({ _id, event, eventDate, completed}) => {
-    // const id = newId;
-    return { _id, event, eventDate, completed};
-  });
 
   return (
     <div className="viewEvent">
@@ -145,43 +141,28 @@ function ViewEvent() {
         </Typography>
       </div>
 
-      <div className="tblInfo">
-        <TableContainer className="viewEvent_tblcontainer">
-          <Table className="app__table" aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="left">Event</TableCell>
-                <TableCell align="left">Date</TableCell>
-                <TableCell align="left">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row._id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="left">{row.event}</TableCell>
-                  <TableCell align="left">{row.eventDate}</TableCell>
-                  <TableCell align="left">
-                    <div className="option_btn">
-                      <IconButton
-                        aria-label="delete"
-                        style={{ color: "red" }}
-                        // onClick={() => onDelete(row._id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
 
-                      <EventModal id={row._id} text={row.event} date={row.eventDate} completed={row.completed} />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+
+      {eventState === null ? 
+<div style={{textAlign:"center", marginTop:50}}>
+    {/* import CircularProgress from "@mui/material/CircularProgress"; */}
+   {/* <CircularProgress /> */}
+   {/* <img src={Loader}/> */}
+   <p>Fetching Data from server....</p>
+  </div>
+  :
+  <div>
+  <Box
+ component="main"
+ >
+ <Container maxWidth={false}>
+   <Box >
+     <EventTable events={eventState} />
+   </Box>
+ </Container>
+</Box>
+ </div>
+  }
     </div>
   );
 }
