@@ -11,8 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import MoneyIcon from "@mui/icons-material/AttachMoney";
-// import axios from "./axios";
-// import Pusher from "pusher-js";
+import axios from "../../axios";
+import { useStateValue } from "../../State/StateProvider";
 
 // Level select Object
 const methods = [
@@ -91,10 +91,12 @@ const FeesModal = ({ fName, lName, id, dob, course, level }) => {
 
   //   NEW
   const [date, setDate] = React.useState("");
-  const [amount, setAmount] = React.useState(0);
+  const [amount, setAmount] = React.useState();
   const [words, setWords] = React.useState();
   const [method, setMethod] = React.useState();
   const [paidFees, setPaidFees] = React.useState(false);
+  const [{ adminToken, admin, studentState }, dispatch] = useStateValue();
+
 
   const changeDate = (event) => {
     setDate(event.target.value);
@@ -113,42 +115,35 @@ const FeesModal = ({ fName, lName, id, dob, course, level }) => {
     setMethod(event.target.value);
   };
 
-  // const changePaidFees = (event) => {
-  //   setPaidFees(true);
-  // };
+  const onUpdate = (e) => {
+    e.preventDefault();
 
-  //   useEffect(() => {
-  //     const pusher = new Pusher("3f4a53efe35be9da4c17", {
-  //       cluster: "eu",
-  //     });
-  //     const channel = pusher.subscribe("cards");
+    const editfees =   
+    {
+      fees: amount,
+    }
 
-  //     channel.bind("updated", changeTask);
-  //   }, []);
+    axios({
+      method: "patch",
+      url: `fees/${id}`,
+      data: editfees,
+    });
 
-  const changePaidFees = (e) => {
-    console.log("hey");
-    setPaidFees(true);
-    // console.log(updateId);
-    // console.log(updateName);
+    let state = [...studentState];
+    console.log("StudentState",state );
+    const requiredState = state.filter((stud) => stud._id === id);
+    // let finalFees = requiredState[0].regFees + amount;
 
-    // e.preventDefault();
-    // if (!updateName.length) {
-    //   return;
-    // }
 
-    // const newCard = {
-    //   name: updateName,
-    // };
+    dispatch({
+      type: "GET_STUDENT_DATA",
+      item: {
+        studentState: requiredState[0].regFees + Number(amount)
+      },
+    });
 
-    // axios({
-    //   method: "patch",
-    //   url: `/tinder/cards/${updateId}`,
-    //   data: newCard,
-    // });
-
-    // setUpdateName("");
     handleClose();
+
   };
 
   return (
@@ -162,7 +157,7 @@ const FeesModal = ({ fName, lName, id, dob, course, level }) => {
           className="pay"
           //   color={paidFees ? "success" : "danger"}
         >
-          {paidFees ? "Paid" : "Owing"}
+          {paidFees ? "Paid" : "Pay"}
         </Button>
       </div>
 
@@ -251,7 +246,7 @@ const FeesModal = ({ fName, lName, id, dob, course, level }) => {
             </div>
           </Box>
 
-          <Button variant="contained" onClick={changePaidFees}>
+          <Button variant="contained" onClick={onUpdate}>
             Confirm Payment
           </Button>
         </Paper>

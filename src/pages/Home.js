@@ -17,25 +17,45 @@ import "../css/Card.css";
 import { Container, Grid, Paper } from "@mui/material";
 
 function Home() {
-  const [{ adminToken, admin, student, staff, events }, dispatch] = useStateValue();
-  const history = useNavigate();
+  // const [{ adminToken, admin, student, staff, events }, dispatch] = useStateValue();
+  const [{ adminToken, admin, studentState, courseState, staffState, eventState }, dispatch] = useStateValue();
+
+  // const history = useNavigate();
+
+// const fetchData = async() => {
+//   const staff = await axios.get("/staff/");
+//   dispatch({
+//     type: "GET_STAFF_DATA",
+//     item: {
+//       staff: staff.data,
+//     },
+//   });
+
+//   const student = await axios.get("/student/");
+//   dispatch({
+//     type: "GET_STUDENT_DATA",
+//     item: {
+//       studentState: student.data,
+//     },
+//   });
+
+//   const course = await axios.get("/course/");
+//   dispatch({
+//     type: "GET_COURSE_DATA",
+//     item: {
+//       courseState: course.data,
+//     },
+//   });
+// }
 
 
-  const getStaffData = async () => {
-    const req = await axios.get("/staff/");
-    // console.log(req);
-    dispatch({
-      type: "GET_STAFF_DATA",
-      item: {
-        staff: req.data,
-      },
-    });
-  };
 
 
-  useEffect(() => {
-    getStaffData();
-  }, []);
+
+
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
 
   // console.log(student[0].address);
   const [eventTitle, setEventTitle] = React.useState([
@@ -75,55 +95,38 @@ function Home() {
       <Paper className="home__paper" elevetion={3}>
         <div className="home__container">
           <Card
-            count="500"
+            count="3"
             title="Students"
             Icon={<PersonIcon className="card__icon" />}
             clsnm="card__student"
           />
           <Card
-            count="20"
+            count="5"
             title="Courses"
             Icon={<MenuBookIcon className="card__icon" />}
             clsnm="card__courses"
           />
           <Card
-            count="30"
-            title="Teachers"
+            count="6"
+            title="Staff"
             Icon={<ManIcon className="card__icon" />}
             clsnm="card__teacher"
           />{" "}
           <Card
-            count="60"
+            count="4"
             title="Events"
             Icon={<NotificationsActiveIcon className="card__icon" />}
             clsnm="card__event"
           />
         </div>
       </Paper>
-      <Container maxWidth={false}>
-        <Grid
-          container
-          spacing={3}
-        >
-            <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
-            <LineChart sx={{ height: '100%' }} />
-          </Grid>
-      <Grid
-            item
-            lg={4}
-            md={12}
-            xl={3}
-            xs={12}
-          >
-            <DougChart sx={{ height: '100%' }} />
-          </Grid>
-          </Grid>
+      <Container maxWidth={false} className="chart-container">
+        <div className="line-chart">
+            <LineChart sx={{ height: '100%' }} className="root-line"/>
+        </div>
+        <div className="dough-chart">
+        <DougChart sx={{ height: '100%' }} className="root-chart"/>
+        </div>
           </Container>
     </div>
   );

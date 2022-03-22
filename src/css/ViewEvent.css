@@ -33,7 +33,12 @@
   align-items: center;
 }
 
-.tblInfo {
+.Tbl-box {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.student_tblInfo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +49,7 @@
 .viewEvent_tblcontainer {
   overflow-x: auto;
   padding: 0px !important;
-  margin-left: 50px !important;
+  margin-left: 20px !important;
   margin-top: 20px !important;
   width: 90% !important;
 }
@@ -114,125 +119,21 @@
   }
 }
 
-@media screen and (max-width: 540px) {
-  .viewEvent_tblcontainer {
-    overflow-x: auto !important;
-    width: 80% !important;
-    margin-left: 0px !important;
+@media screen and (max-width: 600px) {
+  .viewEvent {
+    width: 100vw;
+  }
+  .viewEvent_box {
+    margin-right: 30px !important;
   }
 
-  .tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0px;
-  }
-}
-
-@media screen and (max-width: 430px) {
   .viewEvent_input {
-    width: 270px !important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
+    width: 70vw !important;
   }
 }
 
 @media screen and (max-width: 400px) {
-  .tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -30px;
-  }
-}
-
-@media screen and (max-width: 375px) {
   .viewEvent_box {
-    margin-right: 20px;
-  }
-}
-
-@media screen and (max-width: 360px) {
-  .viewEvent_box {
-    margin-right: 40px !important;
-  }
-
-  .viewEvent_input {
-    width: 220px !important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-  }
-
-  .viewEvent_results {
-    margin-right: 30px !important;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .viewEvent_box {
-    margin-right: 42px !important;
-  }
-
-  .viewEvent_tblcontainer {
-    overflow-x: auto !important;
-    width: 65% !important;
-    margin-left: 0px !important;
-  }
-
-  .tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -50px;
-  }
-
-  .viewEvent_results {
-    margin-right: 40px !important;
-  }
-}
-
-@media screen and (max-width: 305px) {
-  .viewEvent_box {
-    margin-right: 69px !important;
-  }
-}
-
-@media screen and (max-width: 300px) {
-  .viewEvent_box {
-    margin-right: 65px !important;
-  }
-
-  .tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -65px;
-  }
-
-  .viewEvent_results {
-    margin-right: 52px !important;
-  }
-}
-
-@media screen and (max-width: 280px) {
-  .viewEvent_box {
-    margin-right: 70px !important;
-  }
-
-  .viewEvent_tblcontainer {
-    overflow-x: auto !important;
-    width: 55% !important;
-    margin-left: 0px !important;
-  }
-
-  .tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -65px;
-  }
-
-  .viewEvent_results {
-    margin-right: 60px !important;
+    margin-right: 20px !important;
   }
 }

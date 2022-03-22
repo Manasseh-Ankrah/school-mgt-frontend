@@ -192,7 +192,7 @@ function AdjustFees() {
   <Box
  component="main"
  >
- <Container maxWidth={false}>
+ <Container maxWidth={false} className="Tbl-box">
    <Box >
      <AdjustFeesTable setups={feeSetupState} />
    </Box>

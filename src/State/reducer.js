@@ -6,6 +6,7 @@ export const initialState = {
   courseState: [],
   eventState: [],
   feeSetupState: [],
+  feeState: [],
 };
 
 const reducer = (state, action) => {
@@ -40,6 +41,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         feeSetupState: action.item.feeSetupState,
+      };
+    case "GET_FEES_DATA":
+      return {
+        ...state,
+        feeState: action.item.feeState,
       };
 
     default:

@@ -82,21 +82,6 @@ function ViewStudent() {
   const [{ adminToken, admin, studentState }, dispatch] = useStateValue();
   console.log("Student object recieved successfully", studentState);
 
-  const getStudentData = async () => {
-    const req = await axios.get("/student/");
-    console.log(req);
-    dispatch({
-      type: "GET_STUDENT_DATA",
-      item: {
-        studentState: req.data,
-      },
-    });
-  };
-  useEffect(() => {
-    getStudentData();
-  }, []);
-
-
 
   const changeCourseTitle = (event) => {
     setCourseTitle(event.target.value);
@@ -212,8 +197,9 @@ function ViewStudent() {
   <div>
   <Box
  component="main"
+ 
  >
- <Container maxWidth={false}>
+ <Container maxWidth={false} className="Tbl-box">
    <Box >
      <StudentTable students={studentState} />
    </Box>

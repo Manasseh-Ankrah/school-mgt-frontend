@@ -43,20 +43,6 @@ function ViewCourse() {
   const [{ adminToken, admin,courseState }, dispatch] = useStateValue();
 
 
-  const getCourseData = async () => {
-    const req = await axios.get("/course/");
-    // console.log(req);
-    dispatch({
-      type: "GET_COURSE_DATA",
-      item: {
-        courseState: req.data,
-      },
-    });
-  };
-  useEffect(() => {
-    getCourseData();
-  }, []);
-  console.log(courseState);
 
 
 
@@ -78,12 +64,6 @@ function ViewCourse() {
       alert("Select a Category");
     }  else {
       try {
-        const options = {
-          min: 1,
-          max: 5,
-          integer: true,
-        };
-        // setCourseCode(Random(options));
         const newCourse = { 
            "courseTitle": courseTitle,
            "courseCategory": courseCategory, 
@@ -187,7 +167,7 @@ function ViewCourse() {
   <Box
  component="main"
  >
- <Container maxWidth={false}>
+ <Container maxWidth={false} className="Tbl-box">
    <Box >
      <CourseTable courses={courseState} />
    </Box>

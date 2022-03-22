@@ -482,7 +482,7 @@ export default function FullWidthTabs() {
             noValidate
             autoComplete="off"
           >
-            <div className="input_1">
+            {/* <div className="input_1">
               <label htmlFor="contained-button-file">
                 <Input
                   accept="image/*"
@@ -501,7 +501,7 @@ export default function FullWidthTabs() {
                   Upload Picture
                 </Button>
               </label>
-            </div>
+            </div> */}
           </Box>
         </TabPanel>
 

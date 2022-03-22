@@ -33,7 +33,12 @@
   align-items: center;
 }
 
-.fees_tblInfo {
+.Tbl-box {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.student_tblInfo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,164 +119,21 @@
   }
 }
 
-@media screen and (max-width: 540px) {
-  /* .viewFees_box {
-    margin-right: 55px !important;
-  } */
-  .viewFees_tblcontainer {
-    overflow-x: auto !important;
-    width: 80% !important;
-    margin-left: 0px !important;
+@media screen and (max-width: 600px) {
+  .viewFees {
+    width: 100vw;
   }
-
-  .fees_tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -30px;
-  }
-}
-
-@media screen and (max-width: 500px) {
   .viewFees_box {
     margin-right: 30px !important;
-  }
-  .viewFees_results {
-    margin-right: 25px !important;
-  }
-
-  .fees_tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -10px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .viewFees_box {
-    margin-right: 30px !important;
-  }
-
-  .viewFees_tblcontainer {
-    overflow-x: auto !important;
-    width: 70% !important;
-    margin-left: -50px !important;
-  }
-
-  /* .fees_tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 50px;
-  } */
-}
-
-@media screen and (max-width: 430px) {
-  .viewFees_box {
-    margin-right: 45px !important;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .viewFees_box {
-    margin-right: 29px !important;
-  }
-
-  .fees_tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -40px;
-  }
-}
-
-@media screen and (max-width: 414px) {
-  .viewFees_box {
-    margin-right: 29px !important;
-  }
-
-  .fees_tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -20px;
-  }
-}
-
-@media screen and (max-width: 390px) {
-  .viewFees_box {
-    margin-right: 47px !important;
-  }
-
-  /* .viewFees_results {
-    margin-right: 45px !important;
-  } */
-}
-
-@media screen and (max-width: 380px) {
-  .viewFees_box {
-    margin-right: 55px !important;
-  }
-
-  .viewFees_results {
-    margin-right: 45px !important;
-  }
-}
-
-@media screen and (max-width: 360px) {
-  .viewFees_box {
-    margin-right: 79px !important;
   }
 
   .viewFees_input {
-    width: 220px !important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
+    width: 70vw !important;
   }
 }
 
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 400px) {
   .viewFees_box {
-    margin-right: 85px !important;
-  }
-
-  .viewFees_tblcontainer {
-    overflow-x: auto !important;
-    width: 60% !important;
-    margin-left: -50px !important;
-  }
-
-  .fees_tblInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -63px;
-  }
-
-  .viewFees_results {
-    margin-right: 110px !important;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .viewFees_box {
-    margin-right: 85px !important;
-  }
-}
-
-@media screen and (max-width: 300px) {
-  .viewFees_box {
-    margin-right: 110px !important;
-  }
-}
-
-@media screen and (max-width: 280px) {
-  .viewFees_box {
-    margin-right: 120px !important;
-  }
-
-  .viewFees_results {
-    margin-right: 120px !important;
+    margin-right: 20px !important;
   }
 }

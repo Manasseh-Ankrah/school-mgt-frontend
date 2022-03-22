@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import axios from "axios";
+import axios from "../axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Alert, Button, Divider, Paper, Typography } from "@mui/material";
 import { useStateValue } from "../State/StateProvider";
@@ -38,22 +38,10 @@ function Register() {
       alert("Password should not be less than 5 characters");
     } else {
       try {
-        const newAdmin = { email, password, passwordCheck, displayName };
-        const registerResponse = await axios.post("/admin/register", newAdmin);
-
-        const loginAdmin = { email, password };
-        const loginResponse = await axios
-          .post("/admin/login", loginAdmin)
+        const newAdmin = { email, password, passwordCheck, displayName } ;
+        const registerResponse = await axios.post("/admin/register", newAdmin)
           .then((res) => {
             // setLoader(true);
-            dispatch({
-              type: "GET_CURRENT_ADMIN",
-              item: {
-                adminToken: res.data.token,
-                admin: res.data.admin,
-              },
-            });
-            localStorage.setItem("auth-token", res.data.token);
             alert("New account was sucessful");
             setEmail("");
             setPassword("");

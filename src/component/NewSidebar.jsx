@@ -131,11 +131,11 @@ function NewSidebar(props) {
       title: "View Students",
       icon: <SearchIcon />,
     },
-    {
-    path: "/level",
-    title: "Level",
-    icon: <MeetingRoomIcon />,
-  },
+  //   {
+  //   path: "/level",
+  //   title: "Level",
+  //   icon: <MeetingRoomIcon />,
+  // },
   ];
 
      const staffObject = [

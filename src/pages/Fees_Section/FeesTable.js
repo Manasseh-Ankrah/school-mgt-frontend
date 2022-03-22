@@ -6,7 +6,7 @@ import StudentModal from "../Student_Section/StudentModal";
 import axios from "../../axios";
 
 
-import "../../css/StudentTable.css"
+import "../../css/StaffTable.css"
 // import {customers} from './customerData';
 
 // import { format } from 'date-fns';
@@ -27,17 +27,17 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/getInitials';
 import { useStateValue } from '../../State/StateProvider';
+import FeesModal from './FeesModal';
 
 // StudentTable props { customers, ...rest }
-export const StudentTable = ({ students, ...rest }) => {
+export const FeesTable = ({ students, ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-  const [{ adminToken, admin, studentState }, dispatch] = useStateValue();
+  const [{ adminToken, admin, feeState }, dispatch] = useStateValue();
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
-
     if (event.target.checked) {
       newSelectedCustomerIds = students.map((student) => student._id);
     } else {
@@ -76,11 +76,11 @@ export const StudentTable = ({ students, ...rest }) => {
   };
 
     // Delete Student function
-    const deleteStudent = (id) => {
+    const deleteCourse = (id) => {
       dispatch({
-        type: "GET_STUDENT_DATA",
+        type: "GET_FEES_DATA",
         item: {
-          studentState: studentState.filter((student) => student._id !== id),
+          feeState: feeState.filter((fee) => fee._id !== id),
         },
       });
     };
@@ -91,46 +91,35 @@ export const StudentTable = ({ students, ...rest }) => {
     console.log(id);
     axios({
       method: "delete",
-      url: `/student/${id}`,
+      url: `/fees/${id}`,
     });
-    deleteStudent(id);
+    deleteCourse(id);
   };
 
   return (
-    <Card {...students} className='tbl_stud_card' >
+    <Card {...students}>
       <PerfectScrollbar>
         <Box className='tbl_box' >
-          <Table >
-            <TableHead >
+          <Table>
+            <TableHead>
               <TableRow>
-                {/* <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
-                    color="primary"
-                    indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
-                    }
-                    onChange={handleSelectAll}
-                  />
-                </TableCell> */}
                 <TableCell>
-                First
-                </TableCell>
-                <TableCell>
-                Last
-                </TableCell>
-                <TableCell>
-                DOB
-                </TableCell>
-                <TableCell>
-                Course
+                Name
                 </TableCell>
                 <TableCell>
                 Level
                 </TableCell>
                 <TableCell>
-                Action
+                Reg.Fee
+                </TableCell>
+                <TableCell>
+                Remaining
+                </TableCell>
+                <TableCell>
+                Balance
+                </TableCell>
+                <TableCell>
+                Pay Fees
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -141,13 +130,6 @@ export const StudentTable = ({ students, ...rest }) => {
                   key={student._id}
                   selected={selectedCustomerIds.indexOf(student._id) !== -1}
                 >
-                  {/* <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
-                      value="true"
-                    />
-                  </TableCell> */}
                   <TableCell>
                     <Box
                       sx={{
@@ -170,20 +152,20 @@ export const StudentTable = ({ students, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {student.lName}
+                    {student.level}
                   </TableCell>
                   <TableCell>
-                    {student.date}
+                    {student.regFees}
                   </TableCell>
                   <TableCell>
-                    {student.courseTitle}
+                    {student.remaining}
                   </TableCell>
                   <TableCell>
-                  {student.level}
+                    {student.balance}
                   </TableCell>
                   <TableCell align="left">
                     <div className="option_btn">
-                    <Tooltip title="Delete Student">
+                    <Tooltip title="Delete staff">
                       <IconButton
                         aria-label="delete"
                         style={{ color: "red" }}
@@ -192,14 +174,14 @@ export const StudentTable = ({ students, ...rest }) => {
                         <DeleteIcon />
                       </IconButton>
                       </Tooltip>
-                      {/* <Tooltip title="Edit Student"> */}
-                      <StudentModal
+                      {/* <Tooltip title="Edit staff"> */}
+                      <FeesModal
                         id={student._id}
-                        fName={student.fName}
-                        lName={student.lName}
-                        course={student.courseTitle}
-                        dob={student.date}
-                        level={student.level}
+                        courseName={student.courseTitle}
+                        category={student.courseCategory}
+                        // role={staff.role}
+                        // qualification={staff.qualification}
+                        // salary={staff.salary}
                       />
                       {/* </Tooltip> */}
                     </div>
@@ -223,6 +205,6 @@ export const StudentTable = ({ students, ...rest }) => {
   );
 };
 
-StudentTable.propTypes = {
-  students: PropTypes.array.isRequired
+FeesTable.propTypes = {
+    students: PropTypes.array.isRequired
 };

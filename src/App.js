@@ -71,8 +71,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
-        <Route path="/" element={<NewSidebar page={<Home />} />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<NewSidebar page={<Home />} />} />
         {/* <Route path="/" element={<StudentTable />} /> */}
         {/* <Route path="/dashboard" element={<NewSidebar page={<Home />} />} /> */}
         <Route
@@ -83,7 +83,7 @@ function App() {
           path="/view_student"
           element={<NewSidebar page={<ViewStudent />} />}
         />
-        <Route path="/level" element={<NewSidebar page={<Level />} />} />
+        {/* <Route path="/level" element={<NewSidebar page={<Level />} />} /> */}
         <Route
           path="/register_staff"
           element={<NewSidebar page={<RegisterStaff />} />}

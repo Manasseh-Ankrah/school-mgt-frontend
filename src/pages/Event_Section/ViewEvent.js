@@ -155,7 +155,7 @@ function ViewEvent() {
   <Box
  component="main"
  >
- <Container maxWidth={false}>
+ <Container maxWidth={false} className="Tbl-box">
    <Box >
      <EventTable events={eventState} />
    </Box>

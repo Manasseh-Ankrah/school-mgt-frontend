@@ -49,19 +49,7 @@ function ViewStaff() {
   const [{ adminToken, admin, staffState }, dispatch] = useStateValue();
   console.log("Staff object recieved successfully", staffState);
 
-  const getStaffData = async () => {
-    const req = await axios.get("/staff/");
-    console.log(req);
-    dispatch({
-      type: "GET_STAFF_DATA",
-      item: {
-        staffState: req.data,
-      },
-    });
-  };
-  useEffect(() => {
-    getStaffData();
-  }, []);
+
 
   const changeRole = (event) => {
     setRole(event.target.value);
@@ -140,7 +128,7 @@ function ViewStaff() {
   <Box
  component="main"
  >
- <Container maxWidth={false}>
+ <Container maxWidth={false} className="Tbl-box">
    <Box >
      <StaffTable staff={staffState} />
    </Box>

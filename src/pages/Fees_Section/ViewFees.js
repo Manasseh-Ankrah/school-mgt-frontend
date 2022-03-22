@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../css/ViewFees.css";
-import { Paper, Button } from "@mui/material";
+import { Paper, Button, Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,40 +15,32 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import FeesModal from "../Fees_Section/FeesModal";
+import { useStateValue } from "../../State/StateProvider";
+import { FeesTable } from "./FeesTable";
+import axios from "../../axios";
+
 
 function ViewFees() {
   const [fName, setFName] = React.useState("");
   const [lName, setLName] = React.useState("");
   const [data, setData] = React.useState(false);
-  const [studentObj, setStudentObj] = React.useState([
-    {
-      id: 1,
-      fName: "Manasseh",
-      lName: "Ankrah",
-      dob: "01/25/2022",
-      course: "Software-Eng",
-      email: "solommonankrah24@gmail.com",
-      level: "Diploma",
-    },
-    {
-      id: 2,
-      fName: "Elorm",
-      lName: "Ansah",
-      dob: "2015/01/7",
-      course: "Database",
-      email: "e_ansah@gmail.com",
-      level: "NCC-Level 6",
-    },
-    {
-      id: 3,
-      fName: "Bob",
-      lName: "Wright",
-      dob: "1960/05/20",
-      course: "Cyber-Security",
-      email: "bob123@gmail.com",
-      level: "NCC-Level 3",
-    },
-  ]);
+  const [{ adminToken, admin,studentState }, dispatch] = useStateValue();
+
+  const getStudentData = async () => {
+    const req = await axios.get("/student/");
+    // console.log(req);
+    dispatch({
+      type: "GET_STUDENT_DATA",
+      item: {
+        studentState: req.data,
+      },
+    });
+  };
+  useEffect(() => {
+    getStudentData();
+  }, []);
+  console.log(studentState);
+
 
   const changeFName = (event) => {
     setFName(event.target.value);
@@ -62,10 +54,6 @@ function ViewFees() {
     console.log("Hello world");
   };
 
-  const rows = studentObj.map(({ fName, lName, dob, course, level, email }) => {
-    // const id = newId;
-    return { fName, lName, dob, course, level, email };
-  });
   return (
     <div className="viewFees">
       <Paper className="viewFees_paper" elevetion={3}>
@@ -121,7 +109,28 @@ function ViewFees() {
           Payment Information
         </Typography>
       </div>
-      <div className="fees_tblInfo">
+
+      {studentState === null ? 
+<div style={{textAlign:"center", marginTop:50}}>
+    {/* import CircularProgress from "@mui/material/CircularProgress"; */}
+   {/* <CircularProgress /> */}
+   {/* <img src={Loader}/> */}
+   <p>Fetching Data from server....</p>
+  </div>
+  :
+  <div>
+  <Box
+ component="main"
+ >
+ <Container maxWidth={false} className="Tbl-box">
+   <Box >
+     <FeesTable students={studentState} />
+   </Box>
+ </Container>
+</Box>
+ </div>
+  }
+      {/* <div className="fees_tblInfo">
         <TableContainer className="viewFees_tblcontainer">
           <Table className="app__table" aria-label="simple table">
             <TableHead>
@@ -145,14 +154,6 @@ function ViewFees() {
                   <TableCell align="left">{row.level}</TableCell>
                   <TableCell align="left">
                     <div className="option_btn">
-                      {/* <IconButton
-                        aria-label="delete"
-                        style={{ color: "red" }}
-                        onClick={() => onDelete(row._id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton> */}
-
                       <FeesModal
                         id={row.id}
                         fName={row.fName}
@@ -168,7 +169,7 @@ function ViewFees() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </div> */}
     </div>
   );
 }

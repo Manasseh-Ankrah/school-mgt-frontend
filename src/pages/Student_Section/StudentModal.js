@@ -162,8 +162,6 @@ const Modal = ({ fName, lName, id, dob, course, level }) => {
       },
     });
 
-    // setUpdateName("");
-    handleClose();
   };
 
   return (

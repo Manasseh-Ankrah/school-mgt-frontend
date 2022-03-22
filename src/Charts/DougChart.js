@@ -1,8 +1,10 @@
 import { Doughnut } from 'react-chartjs-2';
 import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import PhoneIcon from '@mui/icons-material/Phone';
+import PersonIcon from '@mui/icons-material/Person';
 import TabletIcon from '@mui/icons-material/Tablet';
+import AddCircleIcon from '@mui/icons-material/Book';
+
 
 import {Chart, ArcElement} from 'chart.js'
 Chart.register(ArcElement);
@@ -20,7 +22,7 @@ export const DougChart = (props) => {
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: ['Students', 'Staff', 'Mobile']
+    labels: ['Students', 'Staff', 'Courses']
   };
 
   const options = {
@@ -49,19 +51,19 @@ export const DougChart = (props) => {
     {
       title: 'Students',
       value: 63,
-      icon: LaptopMacIcon,
+      icon: PersonIcon,
       color: '#3F51B5'
     },
     {
       title: 'Staff',
       value: 15,
-      icon: TabletIcon,
+      icon: PersonIcon,
       color: '#E53935'
     },
     {
-      title: 'Mobile',
+      title: 'Courses',
       value: 23,
-      icon: PhoneIcon,
+      icon: AddCircleIcon ,
       color: '#FB8C00'
     }
   ];

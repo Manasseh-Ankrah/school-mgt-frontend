@@ -33,7 +33,12 @@
   align-items: center;
 }
 
-.staff_tblInfo {
+.Tbl-box {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.student_tblInfo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,174 +119,21 @@
   }
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 600px) {
+  .viewStaff {
+    width: 100vw;
+  }
   .viewStaff_box {
-    margin-right: 55px !important;
-  }
-  .viewStaff_tblcontainer {
-    overflow-x: auto !important;
-    width: 80% !important;
-    margin-left: 0px !important;
-  }
-
-  .staff_tblInfo {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-left: 0px;
-  }
-
-  .viewStaff_results {
-    margin-right: 40px !important;
-  }
-  .results_text {
-    font-size: 16px !important;
-    font-weight: bold !important;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .viewStaff_box {
-    margin-right: 82px !important;
-  }
-  .viewStaff_results {
-    margin-right: 80px !important;
-  }
-}
-
-@media screen and (max-width: 460px) {
-  .viewStaff_box {
-    margin-right: 120px !important;
-  }
-
-  .viewStaff_results {
-    margin-right: 115px !important;
-  }
-}
-
-@media screen and (max-width: 430px) {
-  .viewStaff_box {
-    margin-right: 150px !important;
+    margin-right: 30px !important;
   }
 
   .viewStaff_input {
-    width: 270px !important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-  }
-
-  .viewStaff_tblcontainer {
-    overflow-x: auto !important;
-    width: 70% !important;
-    margin-left: 0px !important;
-  }
-
-  .staff_tblInfo {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-left: 0px;
-  }
-
-  .viewStaff_results {
-    margin-right: 140px !important;
-  }
-}
-
-@media screen and (max-width: 414px) {
-  .viewStaff_box {
-    margin-right: 170px !important;
+    width: 70vw !important;
   }
 }
 
 @media screen and (max-width: 400px) {
   .viewStaff_box {
-    margin-right: 180px !important;
-  }
-
-  .staff_tblInfo {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-left: -0px;
-  }
-  /* 
-  .viewStaff_results {
-    margin-right: 180px !important;
-  } */
-}
-
-@media screen and (max-width: 377px) {
-  .viewStaff_tblcontainer {
-    overflow-x: auto !important;
-    width: 60% !important;
-    margin-left: 0px !important;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .viewStaff_box {
-    margin-right: 200px !important;
-  }
-}
-
-@media screen and (max-width: 360px) {
-  .viewStaff_box {
-    margin-right: 225px !important;
-  }
-
-  .viewStaff_input {
-    width: 220px !important;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-  }
-
-  .viewStaff_tblcontainer {
-    overflow-x: auto !important;
-    width: 55% !important;
-    margin-left: 0px !important;
-  }
-
-  .staff_tblInfo {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-left: 0px;
-  }
-
-  .viewStaff_results {
-    margin-right: 210px !important;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .viewStaff_box {
-    margin-right: 260px !important;
-  }
-
-  .viewStaff_results {
-    margin-right: 249px !important;
-  }
-}
-
-@media screen and (max-width: 300px) {
-  .viewStaff_box {
-    margin-right: 280px !important;
-  }
-
-  .viewStaff_tblcontainer {
-    overflow-x: auto !important;
-    width: 48% !important;
-    margin-left: 0px !important;
-  }
-
-  .viewStaff_results {
-    margin-right: 280px !important;
-  }
-}
-
-@media screen and (max-width: 280px) {
-  .viewStaff_box {
-    margin-right: 300px !important;
+    margin-right: 20px !important;
   }
 }

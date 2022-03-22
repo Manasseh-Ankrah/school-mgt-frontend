@@ -305,6 +305,8 @@ const onSubmit = async (e) => {
         "email": email,
         "telephone": telephone,
         "regFees": regFees,
+        "remaining": 0, 
+        "balance": 0,
         "courseTitle": courseTitle,
         "courseCode": courseCode,
         "level": level,
@@ -567,7 +569,7 @@ const onSubmit = async (e) => {
                 // style={{marginRight: 25}}
               />
             </div>
-            <div className="input_1">
+            {/* <div className="input_1">
               <label htmlFor="contained-button-file">
                 <Input
                   accept="image/*"
@@ -586,7 +588,7 @@ const onSubmit = async (e) => {
                   Upload Picture
                 </Button>
               </label>
-            </div>
+            </div> */}
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

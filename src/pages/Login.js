@@ -18,13 +18,13 @@ function Login() {
   const [{ adminToken, admin }, dispatch] = useStateValue();
   const history = useNavigate();
 
-  useEffect(() => {
-    console.log(admin);
+  // useEffect(() => {
+  //   console.log(admin);
 
-    if (admin.id) {
-      history("/dashboard");
-    }
-  }, []);
+  //   if (admin.id) {
+  //     history("/dashboard");
+  //   }
+  // }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -54,15 +54,15 @@ function Login() {
           })
           .catch((err) => {
             alert("No account has been created with these credentials");
+            history("/");
             setLoader(false);
             setPassword("");
           });
-
-        // setLoader(true);
-        // console.log(loginResponse);
-        console.log(adminToken, admin);
-      } catch (err) {
-        console.log(err);
+          
+          console.log(adminToken, admin);
+        } catch (err) {
+          history("/");
+          console.log(err);
         setEmail("");
         setPassword("");
       }
