@@ -43,6 +43,20 @@ function ViewCourse() {
   const [{ adminToken, admin,courseState }, dispatch] = useStateValue();
 
 
+  const getCourseData = async () => {
+    const req = await axios.get("/course/");
+    // console.log(req);
+    dispatch({
+      type: "GET_COURSE_DATA",
+      item: {
+        courseState: req.data,
+      },
+    });
+  };
+  useEffect(() => {
+    getCourseData();
+  }, []);
+  console.log(courseState);
 
 
 
